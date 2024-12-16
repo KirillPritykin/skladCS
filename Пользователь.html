@@ -1,0 +1,262 @@
+<!DOCTYPE html>
+<html lang="ru">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Цифровые системы</title>
+    <style>
+        body {
+            font-family: Arial, sans-serif;
+            margin: 0;
+            padding: 0;
+        }
+
+        .header {
+            background-image: url('banner.jpg'); /* Замените на путь к вашему изображению */
+            height: 300px;
+            background-size: cover;
+            display: flex;
+            justify-content: flex-end;
+            align-items: center;
+            position: relative;
+        }
+
+        .header .exit-button {
+            background-color: red;
+            color: white;
+            border: none;
+            padding: 10px 20px;
+            cursor: pointer;
+            position: absolute;
+            right: 20px;
+            top: 20px;
+            border-radius: 5px;
+        }
+
+        .container {
+            padding: 20px;
+            text-align: center;
+        }
+
+        .button {
+            background-color: #007BFF;
+            color: white;
+            border: none;
+            padding: 15px 30px;
+            cursor: pointer;
+            border-radius: 5px;
+            margin: 10px;
+            transition: background-color 0.3s;
+        }
+
+        .button:hover {
+            background-color: #0056b3;
+        }
+
+        /* Стиль для модального окна */
+        .modal {
+            display: none; /* Скрывать по умолчанию */
+            position: fixed;
+            z-index: 1;
+            left: 0;
+            top: 0;
+            width: 100%;
+            height: 100%;
+            overflow: auto;
+            background-color: rgba(0,0,0,0.4); /* Фон с прозрачностью */
+            padding-top: 60px;
+        }
+
+        .modal-content {
+            background-color: #fefefe;
+            margin: 5% auto;
+            padding: 20px;
+            border: 1px solid #888;
+            width: 80%;
+            font-family: 'Times New Roman', Times, serif;
+            font-size: 14pt;
+        }
+
+        .close {
+            color: #aaa;
+            float: right;
+            font-size: 28px;
+            font-weight: bold;
+        }
+
+        .close:hover,
+        .close:focus {
+            color: black;
+            text-decoration: none;
+            cursor: pointer;
+        }
+
+        /* Стиль для формы обращения */
+        .form-container {
+            display: none; /* Скрывать по умолчанию */
+            padding: 20px;
+            text-align: left;
+        }
+
+        .form-group {
+            margin-bottom: 15px;
+        }
+
+        .form-group label {
+            display: block;
+            margin-bottom: 5px;
+        }
+
+        .form-group input, .form-group textarea {
+            width: 100%;
+            padding: 10px;
+            border: 1px solid #ccc;
+            border-radius: 5px;
+        }
+
+        .form-group input[type="submit"] {
+            background-color: #28a745;
+            color: white;
+            border: none;
+            cursor: pointer;
+        }
+
+        .form-group input[type="submit"]:hover {
+            background-color: #218838;
+        }
+    </style>
+</head>
+<body>
+
+    <div class="header">
+        <button class="exit-button" id="exitButton">Покинуть сайт</button>
+    </div>
+
+    <div class="container">
+        <h1>Добро пожаловать в цифровые системы</h1>
+        <button class="button" id="infoButton">Просмотреть общие сведения сайта</button>
+        <button class="button" id="requestButton">Составить обращение</button>
+        <button class="button" id="authButton">Авторизоваться как сотрудник</button>
+    </div>
+
+    <!-- Модальное окно для информации -->
+    <div id="infoModal" class="modal">
+        <div class="modal-content">
+            <span class="close">&times;</span>
+            <h2>Общие сведения о компании</h2>
+            <p>
+                Компания Общество с ограниченной ответственностью «Цифровые системы» зарегистрирована 21.06.2000 г. по адресу обл. Кемеровская область - Кузбасс, г. Белово, Белово, ул. Чкалова, д. 9.<br>
+                Краткое наименование: ООО «Цифровые системы». При регистрации организации присвоен ОГРН 1024200546149, ИНН 4202016836 и КПП 420201001.<br>
+                Генеральный директор: Михайлов Александр Николаевич. Учредители компании — Михайлов Александр Николаевич.<br>
+                Среднесписочная численность (ССЧ) работников организации — 6.<br>
+                Основной вид деятельности: 95.11 Ремонт компьютеров и периферийного компьютерного оборудования. Общее количество направлений деятельности — 15.<br>
+                За 2023 год прибыль компании составляет — 598 000 ₽, выручка — 5 706 000 ₽.<br>
+                Размер уставного капитала — 20 000,00 ₽. График работы можете просмотреть в 2gis. Мы находимся на Чкалова д.9.<br>
+                Предварительно можете оставить обращение о вашей проблеме, где наши коллеги поспешат к вам на помощь!
+            </p>
+            <button class="button" id="closeModal">Вернуться обратно</button>
+        </div>
+    </div>
+
+    <!-- Форма для обращения -->
+    <div id="requestForm" class="form-container">
+        <h2>Составить обращение</h2>
+        <form id="formRequest">
+            <div class="form-group">
+                <label for="lastName">Фамилия:</label>
+                <input type="text" id="lastName" name="lastName" required>
+            </div>
+            <div class="form-group">
+                <label for="firstName">Имя:</label>
+                <input type="text" id="firstName" name="firstName" required>
+            </div>
+            <div class="form-group">
+                <label for="phone">Телефон:</label>
+                <input type="tel" id="phone" name="phone" required>
+            </div>
+            <div class="form-group">
+                <label for="description">Описание проблемы:</label>
+                <textarea id="description" name="description" rows="5" required></textarea>
+            </div>
+            <div class="form-group">
+                <input type="submit" value="Отправить">
+            </div>
+        </form>
+    </div>
+
+    <script>
+        // Получение элементов
+        const infoButton = document.getElementById('infoButton');
+        const requestButton = document.getElementById('requestButton');
+        const authButton = document.getElementById('authButton');
+        const modal = document.getElementById('infoModal');
+        const closeModal = document.getElementById('closeModal');
+        const closeSpan = document.getElementsByClassName('close')[0];
+        const formContainer = document.getElementById('requestForm');
+        const exitButton = document.getElementById('exitButton');
+
+        // Открытие модального окна информации
+        infoButton.onclick = function() {
+            modal.style.display = "block";
+        }
+
+        // Закрытие модального окна
+        closeModal.onclick = function() {
+            modal.style.display = "none";
+        }
+
+        closeSpan.onclick = function() {
+            modal.style.display = "none";
+        }
+
+        // Закрытие модального окна при клике вне его
+        window.onclick = function(event) {
+            if (event.target == modal) {
+                modal.style.display = "none";
+            }
+        }
+
+        // Показать форму для обращения
+        requestButton.onclick = function() {
+            formContainer.style.display = "block";
+            modal.style.display = "none"; // Скрыть модальное окно
+        }
+
+        // Перенаправление при авторизации
+        authButton.onclick = function() {
+            window.location.href = 'on.php';
+        }
+
+        // Обработка события "Покинуть сайт"
+        exitButton.onclick = function() {
+            if (confirm("Вы уверены, что хотите покинуть сайт?")) {
+                window.location.href = "http://www.google.com"; // Замените на нужный URL
+            }
+        }
+
+        // Отправка формы
+        document.getElementById('formRequest').onsubmit = function(event) {
+            event.preventDefault(); // Предотвращаем перезагрузку страницы
+
+            const lastName = document.getElementById('lastName').value; // Исправлено
+            const firstName = document.getElementById('firstName').value; // Исправлено
+            const phone = document.getElementById('phone').value; // Исправлено
+            const description = document.getElementById('description').value; // Исправлено
+
+            // Отправка данных на сервер
+            const xhr = new XMLHttpRequest();
+            xhr.open("POST", "submit_request.php", true);
+            xhr.setRequestHeader("Content-Type", "application/x-www-form-urlencoded");
+            xhr.onreadystatechange = function () {
+                if (xhr.readyState == 4 && xhr.status == 200) {
+                    alert("Ваше обращение принято, ожидайте звонка от наших коллег!\nДля связи: kirya.mor.05@internet.ru | 142-42-22 Звонок бесплатный по региону");
+                    document.getElementById('formRequest').reset(); // Сбрасываем форму
+                    formContainer.style.display = "none"; // Скрываем форму
+                }
+            };
+            xhr.send(`lastName=${encodeURIComponent(lastName)}&firstName=${encodeURIComponent(firstName)}&phone=${encodeURIComponent(phone)}&description=${encodeURIComponent(description)}`);
+        }
+    </script>
+
+</body>
+</html>
